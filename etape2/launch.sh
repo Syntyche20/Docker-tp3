@@ -1,10 +1,14 @@
+# -----------------------------
+# Launch.ps1 - Etape 2
+# -----------------------------
+
 # Supprimer tous les containers existants
 docker rm -f $(docker ps -aq) 2>$null
 
-# Créer le réseau s'il n'existe pas
+# Créer le réseau Docker s'il n'existe pas
 docker network inspect tp3-network 2>$null || docker network create tp3-network
 
-# Définir les chemins absolus
+# Définir les chemins absolus Windows
 $srcPath = "$PWD\src"
 $configPath = "$PWD\config\default.conf"
 $dbPath = "$PWD\db"
