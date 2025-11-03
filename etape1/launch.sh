@@ -1,4 +1,5 @@
 #!/bin/bash
+export MSYS_NO_PATHCONV=1
 
 # Supprimer tous les containers existants
 docker rm -f $(docker ps -aq) 2>/dev/null
@@ -6,17 +7,20 @@ docker rm -f $(docker ps -aq) 2>/dev/null
 # Créer le réseau Docker s'il n'existe pas
 docker network inspect tp3-network >/dev/null 2>&1 || docker network create tp3-network
 
-# Chemins Windows -> format Linux pour Docker
-SRC_PATH="$(pwd | sed 's|\\|/|g' | sed 's|^\([A-Za-z]\):|/\L\1|')/src"
-CONFIG_PATH="$(pwd | sed 's|\\|/|g' | sed 's|^\([A-Za-z]\):|/\L\1|')/config/default.conf"
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SRC_PATH="$SCRIPT_DIR/src"
+CONFIG_PATH="$SCRIPT_DIR/config/default.conf"
+
 
 # Vérification des fichiers
 if [ ! -d "$SRC_PATH" ]; then
-    echo "Erreur : dossier src introuvable"
+    echo "❌ Erreur : dossier src introuvable"
+    echo "Chemin attendu : $SRC_PATH"
     exit 1
 fi
 if [ ! -f "$CONFIG_PATH" ]; then
-    echo "Erreur : config/default.conf introuvable"
+    echo "❌ Erreur : config/default.conf introuvable"
+    echo "Chemin attendu : $CONFIG_PATH"
     exit 1
 fi
 
@@ -29,4 +33,4 @@ docker run -d --name http --network tp3-network -p 8080:80 \
   -v "$CONFIG_PATH:/etc/nginx/conf.d/default.conf:ro" \
   nginx:latest
 
-echo "Containers lancés. Ouvrir http://localhost:8080/"
+echo "✅ Containers lancés. Ouvrir : http://localhost:8080/"
