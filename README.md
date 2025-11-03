@@ -1,23 +1,30 @@
-# TP3 - Docker Multi-Containers
+# Docker TP3
 
-Ce projet contient 3 étapes pour lancer un environnement avec :
+## Description
+Projet Docker pour le TP3, comprenant 3 étapes :
+1. Étape 1 : PHP-FPM + Nginx
+2. Étape 2 : Ajout d'une base MariaDB + extension mysqli pour PHP
+3. Étape 3 : Gestion via `docker-compose`
 
-- **DATA** : container MariaDB pour la base de données.
-- **SCRIPT** : container PHP-FPM avec mysqli.
-- **HTTP** : container Nginx pour servir les pages PHP.
-
-
+---
 
 ## Instructions pour lancer le TP
 
+### Prérequis
+- Docker installé
+- Git Bash ou terminal compatible Unix
+- Avoir cloné le repository :
+
+```bash
+git clone https://github.com/Syntyche20/Docker-tp3.git
+
 ### Étape 1 à 3
 ```bash
-cd etape1
-bash launch.sh
+cd ~/docker-tp3
 
-cd etape2
-bash launch.sh
+bash etape1/launch.sh
 
-cd etape3
-bash launch.sh
+bash etape2/launch.sh
+
+bash etape3/launch.sh
 
